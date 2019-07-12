@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.testsaraiva.pocspringboot.model.BookModel;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.testsaraiva.pocspringboot.api.SaraivaService;
+import com.testsaraiva.pocspringboot.model.Book;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -17,6 +21,8 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/book")
 public class BookController {
+	
+	static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
 	@PostMapping
 	@ApiOperation(consumes="application/json", produces="application/json", protocols="http", value = "addBook")
@@ -27,7 +33,8 @@ public class BookController {
 			@ApiResponse(code = 404, message = "The resource  not found")
 	})
 	public String addBook(@ApiParam("Book Sku, Can not be null") @RequestParam int sku) {
-		return "Book Added successfully :: " + sku;
+		
+		return "Book Added successfully :: " +sku;
 	}
 	
 	@DeleteMapping("/{sku}")
@@ -53,9 +60,8 @@ public class BookController {
 	public String getBook(@ApiParam("Book Sku, Can not be null") @PathVariable int sku) {
 		
 		SaraivaService saraivaService = new SaraivaService();
-		BookModel bookModel = saraivaService.getBookSaraiva(sku);
-
-		return bookModel.toJson(bookModel);
+		Book bookModel = saraivaService.getBookSaraiva(sku);
+		return gson.toJson(bookModel);
 	}
 	
 	@GetMapping
