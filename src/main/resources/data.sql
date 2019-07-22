@@ -1,0 +1,1 @@
+insert into book values(1, 'marca', 'The Tartar Steppe', 90.0);
