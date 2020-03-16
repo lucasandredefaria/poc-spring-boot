@@ -1,4 +1,3 @@
-#DESAFIO TÉCNICO SARAIVA
 Build: mvn clean install
 Project start: mvn clean spring-boot:run
 
